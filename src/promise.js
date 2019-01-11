@@ -47,20 +47,22 @@ class OwnPromise {
     } catch (error) {
       reject(error);
     }
-
-    //  return this;
   }
 
-  // вынести логику
-
   then(onFulfilled, onRejected) {
+    if (this.state === PENDING) {
+      this.callbacks.push({ onFulfilled, onRejected });
+      return this;
+    }
+
     this.callbacks.push({ onFulfilled, onRejected });
 
     return new OwnPromise((resolve, reject) => {
       try {
         const res = onFulfilled(this.value);
-        setTimeout(resolve(res), 0);
-        resolve(res);
+        setTimeout(() => {
+          resolve(res);
+        });
       } catch (err) {
         const res = onRejected(err);
         reject(res);
@@ -74,9 +76,10 @@ class OwnPromise {
 }
 
 const p = new OwnPromise(function(resolve, reject) {
-  // setTimeout(() => {
-  resolve('value');
-  // }, 1000);
+  setTimeout(() => {
+  // console.log('resolve');
+    resolve('value');
+  }, 1000);
 });
 
 
