@@ -89,6 +89,13 @@ class OwnPromise {
   catch(onRejected) {
     return this.then(onRejected);
   }
+
+
+  static resolve(data) {
+    return new OwnPromise((resolve, reject) => {
+      resolve(data);
+    });
+  }
 }
 
 
