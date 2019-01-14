@@ -100,7 +100,9 @@ class OwnPromise {
       } else if (this.callbacks.length > 0) {
         this.__callHandlers();
       } else {
-        this.state === RESOLVED ? setTimeout(() => internalOnfulfill(this.value), 0) : setTimeout(() => internalOnreject(this.value), 0);
+        this.state === RESOLVED
+          ? setTimeout(() => internalOnfulfill(this.value), 0)
+          : setTimeout(() => internalOnreject(this.value), 0);
       }
     });
   }
