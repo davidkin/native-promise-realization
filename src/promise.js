@@ -52,6 +52,10 @@ class OwnPromise {
     }
   }
 
+  __isThenable(obj) {
+    return obj && obj.then;
+  }
+
   __callHandlers() {
     const run = () => {
       this.callbacks.forEach((callback, i) => {
