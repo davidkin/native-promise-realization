@@ -14,6 +14,24 @@ class OwnPromise {
       throw new TypeError('Executer is not function');
     }
 
+    const resolve = data => {
+      // console.log('in resolve')
+      if (this.state !== PENDING) {
+        return;
+      }
+
+      if (this.__isThenable(data) && data.state === PENDING) {
+        // console.log('data.then')
+        data.then(v => resolve(v), v => reject(v));
+      } else {
+        this.state = this.__isThenable(data) ? data.state : RESOLVED;
+        this.value = this.__isThenable(data) ? data.value : data;
+        // console.log('in resolve', this.state, this.value)
+
+        this.__callHandlers();
+      }
+    };
+
 
     try {
       executer(resolve, reject);
