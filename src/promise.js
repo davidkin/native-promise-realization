@@ -51,6 +51,40 @@ class OwnPromise {
       reject(error);
     }
   }
+
+
+  then(onFulfilled, onRejected) {
+    return new this.constructor((resolve, reject) => {
+      const internalOnfulfill = value => {
+        try {
+          resolve(onFulfilled(value));
+        } catch (error) {
+          reject(error);
+        }
+      };
+
+      const internalOnreject = reason => {
+        if (onRejected && typeof onRejected === 'function') {
+          try {
+            resolve(onRejected(reason));
+          } catch (error) {
+            reject(error);
+          }
+        } else {
+          reject(reason);
+          throw new TypeError('callback must be a function');
+        }
+      };
+
+      if (this.state === PENDING) {
+        this.callbacks.push({ onFulfilled: internalOnfulfill, onRejected: internalOnreject });
+      } else if (this.callbacks.length > 0) {
+        this.__callHandlers();
+      } else {
+        this.state === RESOLVED ? setTimeout(() => internalOnfulfill(this.value), 0) : setTimeout(() => internalOnreject(this.value), 0);
+      }
+    });
+  }
 }
 
 
