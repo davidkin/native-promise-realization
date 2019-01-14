@@ -111,7 +111,7 @@ class OwnPromise {
 
   static resolve(data) {
     if (typeof this !== 'function') {
-      throw new TypeError('this is not a constructor');
+      throw new TypeError('this is not instance from Own Promise');
     }
 
     if (data instanceof OwnPromise) {
@@ -120,6 +120,16 @@ class OwnPromise {
 
     return new OwnPromise((resolve, reject) => {
       resolve(data);
+    });
+  }
+
+  static reject(error) {
+    if (typeof this !== 'function') {
+      throw new TypeError('this is not instance from Own Promise');
+    }
+
+    return new OwnPromise((resolve, reject) => {
+      reject(error);
     });
   }
 }
