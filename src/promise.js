@@ -77,7 +77,7 @@ class OwnPromise {
       this.callbacks.forEach((callback, i) => {
         const { onFulfilled, onRejected } = callback;
 
-        if (callback.length - 1 === i) {
+        if (this.callbacks.length === i) {
           this.value = this.state === RESOLVED ? onFulfilled(this.value) : onRejected(this.value);
         }
 
@@ -187,15 +187,15 @@ class OwnPromise {
   }
 }
 
-const p1 = Promise.resolve(3);
-const p2 = 133;
-const p3 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 100, 'foo');
-});
+// const p1 = OwnPromise.resolve(3);
+// const p2 = 133;
+// const p3 = new OwnPromise((resolve, reject) => {
+//   setTimeout(resolve, 100, 'foo');
+// });
 
-Promise.all([p1, p2, p3]).then(values => {
-  console.log(values);
-});
+// OwnPromise.all([p1, p2, p3]).then(values => {
+//   console.log(values);
+// });
 
 // Выведет:
 // [3, 1337, "foo"]
