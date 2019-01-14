@@ -2,6 +2,10 @@ const RESOLVED = 'RESOLVED';
 const PENDING = 'PENDING';
 const REJECTED = 'REJECTED';
 
+function exeption(func) {
+  throw new TypeError(`${func} is not a function`);
+}
+
 class OwnPromise {
   constructor(executer) {
     this.state = PENDING;
@@ -113,7 +117,11 @@ class OwnPromise {
       return data;
     }
 
-    return new OwnPromise((resolve, reject) => {
+    return new this((resolve, reject) => {
+      if (typeof resolve !== 'function' || typeof reject !== 'function') {
+        throw new TypeError('Not a function');
+      }
+
       resolve(data);
     });
   }
@@ -123,7 +131,10 @@ class OwnPromise {
       throw new TypeError('this is not instance from Own Promise');
     }
 
-    return new OwnPromise((resolve, reject) => {
+    return new this((resolve, reject) => {
+      if (typeof resolve !== 'function' || typeof reject !== 'function') {
+        throw new TypeError('Not a function');
+      }
       reject(error);
     });
   }
@@ -133,7 +144,15 @@ class OwnPromise {
       throw new TypeError('this is not instance from OwnPromise');
     }
 
-    return new OwnPromise((resolve, reject) => {
+    if (!Array.isArray(iterable)) {
+      return this.reject(new TypeError('Not an array'));
+    }
+
+    return new this((resolve, reject) => {
+      if (typeof resolve !== 'function' || typeof reject !== 'function') {
+        throw new TypeError('Not a function');
+      }
+
       iterable.forEach(value => value.then(resolve, reject));
     });
   }
@@ -143,7 +162,11 @@ class OwnPromise {
       throw new TypeError('this is not a constructor');
     }
 
-    return new OwnPromise((resolve, reject) => {
+    return new this((resolve, reject) => {
+      if (typeof resolve !== 'function' || typeof reject !== 'function') {
+        throw new TypeError('Not a function');
+      }
+
       const isIterable = object => object !== null && typeof object[Symbol.iterator] === 'function';
 
       if (!isIterable(iterable)) {
@@ -183,6 +206,5 @@ class OwnPromise {
     });
   }
 }
-
 
 module.exports = OwnPromise;
