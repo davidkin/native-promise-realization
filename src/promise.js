@@ -32,6 +32,18 @@ class OwnPromise {
       }
     };
 
+    const reject = error => {
+      if (this.state !== PENDING) {
+        return;
+      }
+
+      this.state = isRejected();
+      this.value = error;
+
+      this.callbacks.forEach(({ onRejected }) => {
+        this.value = onRejected(error);
+      });
+    };
 
     try {
       executer(resolve, reject);
