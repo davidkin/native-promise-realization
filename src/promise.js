@@ -52,6 +52,21 @@ class OwnPromise {
     }
   }
 
+  __callHandlers() {
+    const run = () => {
+      this.callbacks.forEach((callback, i) => {
+        const { onFulfilled, onRejected } = callback;
+
+        if (callback.length - 1 === i) {
+          this.value = this.state === RESOLVED ? onFulfilled(this.value) : onRejected(this.value);
+        }
+
+        this.state === RESOLVED ? onFulfilled(this.value) : onRejected(this.value);
+      });
+    };
+
+    setTimeout(run, 0);
+  }
 
   then(onFulfilled, onRejected) {
     return new this.constructor((resolve, reject) => {
@@ -89,7 +104,6 @@ class OwnPromise {
   catch(onRejected) {
     return this.then(onRejected);
   }
-
 
   static resolve(data) {
     return new OwnPromise((resolve, reject) => {
