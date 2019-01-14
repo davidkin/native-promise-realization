@@ -40,12 +40,12 @@ class OwnPromise {
 
       if (this.__isThenable(data) && data.state === PENDING) {
         data.then(v => resolve(v), v => reject(v));
-      } else {
-        this.state = this.__isThenable(data) ? data.state : RESOLVED;
-        this.value = this.__isThenable(data) ? data.value : data;
-
-        this.__callHandlers();
       }
+
+      this.state = this.__isThenable(data) ? data.state : RESOLVED;
+      this.value = this.__isThenable(data) ? data.value : data;
+
+      this.__callHandlers();
     };
 
     try {
@@ -58,6 +58,7 @@ class OwnPromise {
   __isThenable(obj) {
     return obj && obj.then;
   }
+
   __callHandlers() {
     const run = () => {
       this.callbacks.forEach((callback, i) => {
@@ -110,7 +111,7 @@ class OwnPromise {
   }
 
   catch(onRejected) {
-    return this.then(onRejected);
+    return this.then(null, onRejected);
   }
 
   static resolve(data) {
