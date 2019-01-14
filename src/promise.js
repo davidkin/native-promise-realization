@@ -160,19 +160,45 @@ class OwnPromise {
       iterable.forEach(value => value.then(resolve, reject));
     });
   }
+
+  static all(iterable) {
+    if (typeof this !== 'function') {
+      throw new TypeError('this is not a constructor');
+    }
+
+    return new OwnPromise((resolve, reject) => {
+      const values = new Array(iterable.length);
+      let counter = 0;
+
+      const tryResolve = i => value => {
+        values[i] = value;
+        counter += 1;
+
+        if (counter === iterable.length) {
+          resolve(values);
+        }
+      };
+
+      for (let i = 0; i < iterable.length; i++) {
+        const promise = iterable[i];
+        promise.then(tryResolve(i), reject);
+      }
+    });
+  }
 }
 
+const p1 = Promise.resolve(3);
+const p2 = 133;
+const p3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, 'foo');
+});
 
-// const p = new OwnPromise((res, rej) => {
-//   res(1);
-// });
+Promise.all([p1, p2, p3]).then(values => {
+  console.log(values);
+});
 
-// const a = p.then(v => console.log(1)).then(v => console.log(2));
-
-// const b = p.then(v => console.log(3));
-
-// console.log('---', a);
-// console.log('---', b);
+// Выведет:
+// [3, 1337, "foo"]
 
 
 module.exports = OwnPromise;
