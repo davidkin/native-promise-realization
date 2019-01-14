@@ -11,7 +11,6 @@ class OwnPromise {
       throw new TypeError('Executer is not function');
     }
 
-
     const reject = error => {
       if (this.state !== PENDING) {
         return;
@@ -24,7 +23,6 @@ class OwnPromise {
         this.value = onRejected(error);
       });
     };
-
 
     const resolve = data => {
       if (this.state !== PENDING) {
@@ -87,7 +85,6 @@ class OwnPromise {
           }
         } else {
           reject(reason);
-          throw new TypeError('callback must be a function');
         }
       };
 
