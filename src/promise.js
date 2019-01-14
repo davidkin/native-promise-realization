@@ -85,6 +85,10 @@ class OwnPromise {
       }
     });
   }
+
+  catch(onRejected) {
+    return this.then(onRejected);
+  }
 }
 
 
