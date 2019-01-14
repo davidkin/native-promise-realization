@@ -10,20 +10,6 @@ const isRejected = () => {
   this.state = REJECTED;
 };
 
-// const isIterable = function(subject) {
-//   return subject !== null && typeof subject[Symbol.iterator] === 'function';
-// };
-
-
-// const validateIterable = subject => {
-//   if (isIterable(subject)) {
-//     return;
-//   }
-
-//   throw new TypeError(`Cannot read property 'Symbol(Symbol.iterator)' of ${Object.prototype.toString.call(subject)}.`);
-// };
-
-
 class OwnPromise {
   constructor(executer) {
     this.state = PENDING;
@@ -167,6 +153,23 @@ class OwnPromise {
     }
 
     return new OwnPromise((resolve, reject) => {
+      const isIterable = object => object !== null && typeof object[Symbol.iterator] === 'function';
+
+      if (!isIterable(iterable)) {
+        throw new TypeError('ERROR');
+      }
+
+      const isEmptyIterable = iterable => {
+        for (const key of iterable) {
+          return true;
+        }
+        return false;
+      };
+
+      if (!isEmptyIterable(iterable)) {
+        return resolve([]);
+      }
+
       const values = new Array(iterable.length);
       let counter = 0;
 
@@ -180,25 +183,15 @@ class OwnPromise {
       };
 
       for (let i = 0; i < iterable.length; i++) {
-        const promise = iterable[i];
+        const promise = iterable[i] instanceof OwnPromise
+          ? iterable[i]
+          : new OwnPromise(res => { res(iterable[i]); });
+
         promise.then(tryResolve(i), reject);
       }
     });
   }
 }
-
-// const p1 = OwnPromise.resolve(3);
-// const p2 = 133;
-// const p3 = new OwnPromise((resolve, reject) => {
-//   setTimeout(resolve, 100, 'foo');
-// });
-
-// OwnPromise.all([p1, p2, p3]).then(values => {
-//   console.log(values);
-// });
-
-// Выведет:
-// [3, 1337, "foo"]
 
 
 module.exports = OwnPromise;
