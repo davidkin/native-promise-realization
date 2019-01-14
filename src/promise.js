@@ -2,14 +2,6 @@ const RESOLVED = 'RESOLVED';
 const PENDING = 'PENDING';
 const REJECTED = 'REJECTED';
 
-const isResolved = () => {
-  this.state = RESOLVED;
-};
-
-const isRejected = () => {
-  this.state = REJECTED;
-};
-
 class OwnPromise {
   constructor(executer) {
     this.state = PENDING;
@@ -19,12 +11,13 @@ class OwnPromise {
       throw new TypeError('Executer is not function');
     }
 
+
     const reject = error => {
       if (this.state !== PENDING) {
         return;
       }
 
-      this.state = isRejected();
+      this.state = REJECTED;
       this.value = error;
 
       this.callbacks.forEach(({ onRejected }) => {
