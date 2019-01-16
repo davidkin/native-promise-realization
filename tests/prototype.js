@@ -11,7 +11,9 @@ describe('25.4.4.2 Promise.prototype', function() {
     // other objects in the prototype chain?
     assert.ok(Promise.prototype instanceof Object);
   });
-  it('has attribute [[Writable]]: false');
+  it('has attribute [[Writable]]: false', () => {
+
+  });
   it('has attribute [[Enumerable]]: false');
   it('has attribute [[Configurable]]: false');
 });
@@ -47,10 +49,10 @@ describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
 });
 
 describe('25.4.5.2 Promise.prototype.constructor', function() {
-  it('is not an object', function() {
+  it('is an object', function() {
     const isNotObject = false;
 
-    assert.equal(isNotObject, typeof Promise.constructor === 'object');
+    assert.ok(Promise.constructor instanceof Object);
   });
 
   it('is a function', () => {
