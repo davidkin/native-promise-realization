@@ -60,7 +60,20 @@ describe('25.4.5.2 Promise.prototype.constructor', function() {
   });
 
 
-  it('is the Promise constructor');
+  it('is the Promise constructor', () => {
+    function isConstructor(f) {
+      try {
+        new f();
+      } catch (err) {
+        if (err.message.indexOf('is not a constructor') >= 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    assert.ok(isConstructor(Promise.constructor));
+  });
 });
 
 describe('25.4.5.3 Promise.prototype.then', function() {
