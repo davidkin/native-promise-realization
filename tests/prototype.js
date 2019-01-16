@@ -23,7 +23,10 @@ describe('25.4.5 Properties of the Promise Prototype Object', function() {
     assert.ok(Promise.prototype.then instanceof Object);
     assert.ok(Promise.prototype.catch instanceof Object);
   });
-  it('is not a Promise'); // implied
+
+  it('is not a Promise', () => {
+    assert.equal(false, Promise.prototype.then instanceof Promise);
+  }); // implied
 });
 
 describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
