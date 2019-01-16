@@ -47,7 +47,11 @@ describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
 });
 
 describe('25.4.5.2 Promise.prototype.constructor', function() {
-  it('is not an object');
+  it('is not an object', function() {
+    const isNotObject = false;
+
+    assert.equal(isNotObject, typeof Promise.constructor === 'object');
+  });
 
   it('is a function');
 
