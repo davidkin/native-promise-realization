@@ -53,7 +53,10 @@ describe('25.4.5.2 Promise.prototype.constructor', function() {
     assert.equal(isNotObject, typeof Promise.constructor === 'object');
   });
 
-  it('is a function');
+  it('is a function', () => {
+    assert.equal('function', typeof Promise.constructor);
+  });
+
 
   it('is the Promise constructor');
 });
