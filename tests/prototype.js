@@ -26,11 +26,15 @@ describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
     assert.equal('function', typeof Promise.prototype.catch);
   });
 
-  it("expects 'this' to be a Promise", function () {
-    var p = new Promise((res, rej) => {
-        res(1);
-        rej('Error');
+  it('expects \'this\' to be a Promise', function() {
+    const p = new Promise((res, rej) => {
+      res(1);
+      rej('Error');
     });
+    const result = p.catch(v => v);
+
+    assert.ok(result instanceof Promise);
+  });
 
   it('takes one argument, a function');
 
