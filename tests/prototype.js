@@ -62,7 +62,9 @@ describe('25.4.5.2 Promise.prototype.constructor', function() {
 });
 
 describe('25.4.5.3 Promise.prototype.then', function() {
-  it('is a function');
+  it('is a function', () => {
+    assert.equal('function', typeof Promise.constructor);
+  });
   it('expects \'this\' to be a Promise');
   it('throws TypeError if \'this\' is not a Promise');
   it('takes two arguments, both optional, both functions');
