@@ -35,8 +35,11 @@ describe('25.4.5 Properties of the Promise Prototype Object', function() {
   });
 
   it('is not a Promise', () => {
-    assert.equal(false, Promise.prototype.then instanceof Promise);
-    assert.equal(false, Promise.prototype.catch instanceof Promise);
+    const isThenPromise = Promise.prototype.then instanceof Promise;
+    const isCatchPromise = Promise.prototype.catch instanceof Promise;
+
+    assert.equal(false, isCatchPromise);
+    assert.equal(false, isThenPromise);
   }); // implied
 });
 
