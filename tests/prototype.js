@@ -36,7 +36,12 @@ describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
     assert.ok(result instanceof Promise);
   });
 
-  it('takes one argument, a function');
+  it('takes one argument, a function', function() {
+    const argLength = 1;
+
+    assert.equal(argLength, Promise.prototype.catch.length);
+  });
+
 
   it('is equivalent to \'promise.then(undefined, fn)\'');
 });
