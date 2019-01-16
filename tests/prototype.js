@@ -11,11 +11,21 @@ describe('25.4.4.2 Promise.prototype', function() {
     // other objects in the prototype chain?
     assert.ok(Promise.prototype instanceof Object);
   });
-  it('has attribute [[Writable]]: false');
 
-  it('has attribute [[Enumerable]]: false');
+  it('has attribute [[Writable]]: false', () => {
+    const isNotWritable = Object.getOwnPropertyDescriptor(Promise, 'prototype');
+    assert.equal(false, isNotWritable.writable);
+  });
 
-  it('has attribute [[Configurable]]: false');
+  it('has attribute [[Enumerable]]: false', () => {
+    const isNotWritable = Object.getOwnPropertyDescriptor(Promise, 'prototype');
+    assert.equal(false, isNotWritable.enumerable);
+  });
+
+  it('has attribute [[Configurable]]: false', () => {
+    const isNotWritable = Object.getOwnPropertyDescriptor(Promise, 'prototype');
+    assert.equal(false, isNotWritable.configurable);
+  });
 });
 
 describe('25.4.5 Properties of the Promise Prototype Object', function() {
