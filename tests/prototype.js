@@ -11,15 +11,18 @@ describe('25.4.4.2 Promise.prototype', function() {
     // other objects in the prototype chain?
     assert.ok(Promise.prototype instanceof Object);
   });
-  it('has attribute [[Writable]]: false', () => {
+  it('has attribute [[Writable]]: false');
 
-  });
   it('has attribute [[Enumerable]]: false');
+
   it('has attribute [[Configurable]]: false');
 });
 
 describe('25.4.5 Properties of the Promise Prototype Object', function() {
-  it('is an ordinary object');
+  it('is an ordinary object', () => {
+    assert.ok(Promise.prototype.then instanceof Object);
+    assert.ok(Promise.prototype.catch instanceof Object);
+  });
   it('is not a Promise'); // implied
 });
 
