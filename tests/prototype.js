@@ -22,7 +22,9 @@ describe('25.4.5 Properties of the Promise Prototype Object', function() {
 });
 
 describe('25.4.5.1 Promise.prototype.catch( onRejected )', function() {
-  it('is a function');
+  it('is a function', function() {
+    assert.equal('function', typeof Promise.prototype.catch);
+  });
 
   it('expects \'this\' to be a Promise');
 
