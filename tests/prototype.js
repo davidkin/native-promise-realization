@@ -65,8 +65,28 @@ describe('25.4.5.3 Promise.prototype.then', function() {
   it('is a function', () => {
     assert.equal('function', typeof Promise.constructor);
   });
-  it('expects \'this\' to be a Promise');
-  it('throws TypeError if \'this\' is not a Promise');
+
+  it('expects \'this\' to be a Promise', () => {
+    const p = new Promise((res, rej) => {
+      res(1);
+    });
+    const result = p.then(v => v);
+
+    assert.ok(result instanceof Promise);
+  });
+
+  it('throws TypeError if \'this\' is not a Promise', () => {
+    const isNotAPromise = 3;
+    const p = new Promise((res, rej) => {
+      res(1);
+    });
+
+    const result = p.then(v => v);
+
+    // assert.throws(() => !(result instanceof Promise), Error, 'this is not a Promise');
+    assert.throws(() => !(isNotAPromise instanceof Promise).ok(true), TypeError);
+  });
+
   it('takes two arguments, both optional, both functions');
   it('has default on resolve: identity');
   it('has default on reject: thrower', function(done) {
