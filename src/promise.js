@@ -2,10 +2,6 @@ const RESOLVED = 'RESOLVED';
 const PENDING = 'PENDING';
 const REJECTED = 'REJECTED';
 
-function exeption(func) {
-  throw new TypeError(`${func} is not a function`);
-}
-
 class OwnPromise {
   constructor(executer) {
     this.state = PENDING;
